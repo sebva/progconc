@@ -6,7 +6,7 @@ class Principale
 	{
 
 		AjoutComposant maFrame = new AjoutComposant("Ajouter Graphique");
-		maFrame.setSize(400, 400);
+		maFrame.setSize(1024,768);
 		maFrame.setVisible(true);
 	}
 }

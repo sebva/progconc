@@ -3,7 +3,9 @@ package ch.hearc.progconc.labojava1;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -19,15 +21,21 @@ import java.util.Vector;
 class MyCanvas extends Canvas implements Runnable
 {
 
-	Vector<ObjetGraphique> listeObjetsDessinables = new Vector<ObjetGraphique>();
+	private Vector<ObjetGraphique> listeObjetsDessinables = new Vector<ObjetGraphique>();
 	// Pour le double buffer
-	Image offScrImage;
-	Graphics offScrGC;
-	int largeur, hauteur;
+	private Image offScrImage;
+	private Graphics offScrGC;
+	private int largeur, hauteur;
 	// temps en millisecondes entre chaque frame d'animation
 
 	// Changement de couleurs
-	Random alea;
+	private Random alea;
+	
+	// Zones protégées
+	private final ProtectedZone[] pz = {
+			new ProtectedZoneReetrantLock(new Point(400, 100)),
+			new ProtectedZoneSemaphore(new Point(50, 200))
+			};
 
 	public MyCanvas()
 	{
@@ -53,7 +61,7 @@ class MyCanvas extends Canvas implements Runnable
 				offScrGC = offScrImage.getGraphics();
 				offScrGC.setColor(Color.red);
 
-				System.out.println("Canvas Drawing1 retaillée : width = " + largeur + "height = " + hauteur);
+				//System.out.println("Canvas Drawing1 retaillée : width = " + largeur + "height = " + hauteur);
 			}
 		}; // Fin de la classe anonyme
 
@@ -71,6 +79,11 @@ class MyCanvas extends Canvas implements Runnable
 	public void ajouteObjetDessinable(ObjetGraphique objet)
 	{
 		listeObjetsDessinables.addElement(objet);
+	}
+	
+	public ProtectedZone[] getProtectedZones()
+	{
+		return pz;
 	}
 
 	/**
@@ -114,6 +127,11 @@ class MyCanvas extends Canvas implements Runnable
 			// On dessine un cercle dans le double buffer
 			objetDessinable.dessineToi(offScrGC);
 
+		}
+		
+		for (ProtectedZone p : pz)
+		{
+			p.draw(offScrGC);
 		}
 
 		// On recopie le double buffer dans le canvas

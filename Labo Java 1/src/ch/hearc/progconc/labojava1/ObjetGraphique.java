@@ -1,6 +1,7 @@
 package ch.hearc.progconc.labojava1;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public abstract class ObjetGraphique implements Runnable
 {
@@ -9,14 +10,16 @@ public abstract class ObjetGraphique implements Runnable
 	protected int largeur, hauteur; // Boite englobante de l'objet
 	static int zone_l, zone_h; // taille de la zone ou l'objet a le droit de se promener
 	static int nbObjetsCrees = 0;
+	private final ProtectedZone[] pz;
 
 	// Constructeurs
-	public ObjetGraphique(int x, int y, int largeur, int hauteur)
+	public ObjetGraphique(int x, int y, int largeur, int hauteur, ProtectedZone[] pz)
 	{
 		this.x = x;
 		this.y = y;
 		this.largeur = largeur;
 		this.hauteur = hauteur;
+		this.pz = pz;
 		nbObjetsCrees++;
 
 		new Thread(this).start();
@@ -71,6 +74,14 @@ public abstract class ObjetGraphique implements Runnable
 
 	public void move(int x, int y)
 	{
+		Rectangle rect = new Rectangle(x - (largeur / 2), y - (hauteur / 2), largeur, hauteur);
+		for (ProtectedZone p : pz)
+		{
+			if(p.isInZone(rect))
+				p.iWantToEnter(this);
+			else
+				p.exit(this);
+		}
 		this.x = x;
 		this.y = y;
 	}
@@ -101,7 +112,7 @@ public abstract class ObjetGraphique implements Runnable
 			// Pour ne pas que l'objet sorte de l'ecran
 			if ((incX == 1) && ((x + (largeur / 2)) > zone_l))
 				incX = -1;
-			System.out.println(largeur);
+			//System.out.println(largeur);
 
 			if ((incX == -1) && (x - (largeur / 2) < 0))
 				incX = 1;

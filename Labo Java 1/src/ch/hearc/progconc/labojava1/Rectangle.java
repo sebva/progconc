@@ -6,9 +6,9 @@ public class Rectangle extends ObjetGraphique
 {
 
 	// Constructeurs
-	public Rectangle(int x, int y, int width, int height)
+	public Rectangle(int x, int y, int width, int height, ProtectedZone[] pz)
 	{
-		super(x, y, width, height);
+		super(x, y, width, height, pz);
 
 	}
 

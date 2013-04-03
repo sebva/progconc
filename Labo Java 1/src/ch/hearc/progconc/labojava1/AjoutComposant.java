@@ -52,7 +52,7 @@ public class AjoutComposant extends Frame implements ActionListener
 		if (arg.equals("Ajouter cercle"))
 		{
 
-			c.ajouteObjetDessinable(new Cercle((int) (Math.rint(Math.random() * c.getWidth())), (int) (Math.rint(Math.random() * c.getHeight())), 30));
+			c.ajouteObjetDessinable(new Cercle((int) (Math.rint(Math.random() * c.getWidth())), (int) (Math.rint(Math.random() * c.getHeight())), 30, c.getProtectedZones()));
 			c.repaint();
 			message.setText((String) ("Nb elements : " + ObjetGraphique.getNbObjetsCrees()));
 		}
@@ -66,7 +66,7 @@ public class AjoutComposant extends Frame implements ActionListener
 		}
 		else if (arg.equals("Ajouter rectangle"))
 		{
-			c.ajouteObjetDessinable(new Rectangle((int) (Math.rint(Math.random() * c.getWidth())), (int) (Math.rint(Math.random() * c.getHeight())), 30, 20));
+			c.ajouteObjetDessinable(new Rectangle((int) (Math.rint(Math.random() * c.getWidth())), (int) (Math.rint(Math.random() * c.getHeight())), 30, 20, c.getProtectedZones()));
 
 			message.setText("Nb elements : " + ObjetGraphique.getNbObjetsCrees());
 			c.repaint();

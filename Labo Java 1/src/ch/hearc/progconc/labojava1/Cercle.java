@@ -8,9 +8,9 @@ public class Cercle extends ObjetGraphique
 	int rayon; // le rayon du cercle
 
 	// Constructeurs
-	public Cercle(int x, int y, int rayon)
+	public Cercle(int x, int y, int rayon, ProtectedZone[] pz)
 	{
-		super(x, y, 2 * rayon, 2 * rayon);
+		super(x, y, 2 * rayon, 2 * rayon, pz);
 		this.rayon = rayon;
 	}
 
