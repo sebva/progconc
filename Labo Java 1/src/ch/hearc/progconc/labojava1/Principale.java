@@ -31,7 +31,7 @@ package ch.hearc.progconc.labojava1;
  * <br />Si l'ensemble marche à nouveau sans erreur, 
  * c'est que le test est aussi concluant.
  * 
- * Les 2 cas fonctionnent correctement
+ * Les 2 cas fonctionnent correctement.<br /><br />
  * 
  * @author Diego Antognini
  * @author Sébastien Vaucher
