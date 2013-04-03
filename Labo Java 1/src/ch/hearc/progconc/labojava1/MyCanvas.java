@@ -33,7 +33,7 @@ class MyCanvas extends Canvas implements Runnable
 	
 	// Zones protégées
 	private final ProtectedZone[] pz = {
-			new ProtectedZoneReetrantLock(new Point(400, 100)),
+			new ProtectedZoneReetrantLock(new Point(500, 100)),
 			new ProtectedZoneSemaphore(new Point(50, 200))
 			};
 
