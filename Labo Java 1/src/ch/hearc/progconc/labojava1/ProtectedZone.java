@@ -28,12 +28,21 @@ public abstract class ProtectedZone
 		this.color = color;
 		this.zoneName = zoneName;
 		kZone = new java.awt.Rectangle(origin, kDimension);
+		
+		this.init();
 	}
 	
-	public abstract void iWantToEnter(ObjetGraphique graphicalObject);
+	public abstract void iWantToEnter(ObjetGraphique graphicalObject) throws InterruptedException;
 	public abstract void releaseCircle();
 	public abstract void releaseRectangle();
 	public abstract void releaseImage();
+	
+	public void init()
+	{
+		circle = null;
+		rectangle = null;
+		image = null;
+	}
 
 	public boolean isInZone(java.awt.Rectangle rect)
 	{

@@ -3,7 +3,6 @@ package ch.hearc.progconc.labojava1;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -11,7 +10,7 @@ import javax.imageio.ImageIO;
 public class ImageGraphique extends ObjetGraphique
 {
 
-	private Image kImage;
+	private static Image image = null;
 	private String nom;
 	private Canvas parent;
 
@@ -22,15 +21,16 @@ public class ImageGraphique extends ObjetGraphique
 		super(x, y, 0, 0, parent.getProtectedZones());
 		try
 		{
-			kImage = ImageIO.read(getClass().getResource(nom));
+			if(image == null)
+				image = ImageIO.read(getClass().getResource(nom));
 		}
 		catch (IOException ex)
 		{
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
-		hauteur = kImage.getHeight(null);
-		largeur = kImage.getWidth(null);
+		hauteur = image.getHeight(null);
+		largeur = image.getWidth(null);
 		this.parent = parent;
 
 		// A faire, bloquer jusqu'à ce que l'image ait une taille et positionner cette taille !!!
@@ -43,6 +43,6 @@ public class ImageGraphique extends ObjetGraphique
 
 	public void dessineToi(Graphics gc)
 	{
-		gc.drawImage(kImage, x - (largeur / 2), y - (hauteur / 2), parent);
+		gc.drawImage(image, x - (largeur / 2), y - (hauteur / 2), parent);
 	}
 }

@@ -11,6 +11,7 @@ public abstract class ObjetGraphique implements Runnable
 	static int zone_l, zone_h; // taille de la zone ou l'objet a le droit de se promener
 	static int nbObjetsCrees = 0;
 	private final ProtectedZone[] pz;
+	private Thread thread;
 
 	// Constructeurs
 	public ObjetGraphique(int x, int y, int largeur, int hauteur, ProtectedZone[] pz)
@@ -22,7 +23,8 @@ public abstract class ObjetGraphique implements Runnable
 		this.pz = pz;
 		nbObjetsCrees++;
 
-		new Thread(this).start();
+		thread = new Thread(this);
+		thread.start();
 	}
 
 	/** Renvoie le nombre d'instances d'ObjectGraphique */
@@ -72,7 +74,7 @@ public abstract class ObjetGraphique implements Runnable
 		this.largeur = largeur;
 	}
 
-	public void move(int x, int y)
+	public void move(int x, int y) throws InterruptedException
 	{
 		Rectangle rect = new Rectangle(x - (largeur / 2), y - (hauteur / 2), largeur, hauteur);
 		for (ProtectedZone p : pz)
@@ -84,6 +86,11 @@ public abstract class ObjetGraphique implements Runnable
 		}
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void interruptThread()
+	{
+		thread.interrupt();
 	}
 
 	public abstract void dessineToi(Graphics gc);
@@ -99,45 +106,43 @@ public abstract class ObjetGraphique implements Runnable
 	{
 		int incX = 1, incY = 1;
 
-		while (true)
+		try
 		{
-
-			int x = this.x, y = this.y;
-
-			// On calcule la nouvelle position de l'objet
-
-			x += Math.rint(Math.random() * incX);
-			y += Math.rint(Math.random() * incY);
-
-			// Pour ne pas que l'objet sorte de l'ecran
-			if ((incX == 1) && ((x + (largeur / 2)) > zone_l))
-				incX = -1;
-			//System.out.println(largeur);
-
-			if ((incX == -1) && (x - (largeur / 2) < 0))
-				incX = 1;
-
-			if ((incY == 1) && (y + (hauteur / 2) > zone_h))
-				incY = -1;
-
-			if ((incY == -1) && (y - (hauteur / 2) < 0))
-				incY = 1;
-
-			// On déplace l'objet
-			move(x, y);
-
-			// On "dort" tempsEntreDeplacement millisecondes
-			try
+			while (true)
 			{
+				int x = this.x, y = this.y;
+	
+				// On calcule la nouvelle position de l'objet
+	
+				x += Math.rint(Math.random() * incX);
+				y += Math.rint(Math.random() * incY);
+	
+				// Pour ne pas que l'objet sorte de l'ecran
+				if ((incX == 1) && ((x + (largeur / 2)) > zone_l))
+					incX = -1;
+				//System.out.println(largeur);
+	
+				if ((incX == -1) && (x - (largeur / 2) < 0))
+					incX = 1;
+	
+				if ((incY == 1) && (y + (hauteur / 2) > zone_h))
+					incY = -1;
+	
+				if ((incY == -1) && (y - (hauteur / 2) < 0))
+					incY = 1;
+	
+				// On déplace l'objet
+				move(x, y);
+	
+				// On "dort" tempsEntreDeplacement millisecondes
 				Thread.sleep(10);
 			}
-			catch (InterruptedException e)
-			{
-				System.out.println("Erreur dans le sleep(tempsEntreDeplacements);");
-				e.printStackTrace();
-			}
-
 		}
+		catch (InterruptedException e)
+		{
+			System.out.println(Thread.currentThread().getName() + " interrompu");
+		}
+
 	}
 
 }

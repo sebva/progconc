@@ -23,44 +23,34 @@ public class ProtectedZoneSemaphore extends ProtectedZone
 	public ProtectedZoneSemaphore(Point origin)
 	{
 		super(origin, kColor, kName);
-		semaphoreCircle = new Semaphore(kNumberOfObjectsInCriticalSection);
-		semaphoreImage = new Semaphore(kNumberOfObjectsInCriticalSection);
-		semaphoreRectangle = new Semaphore(kNumberOfObjectsInCriticalSection);
 	}
 
 	@Override
-	public void iWantToEnter(ObjetGraphique graphicalObject)
+	public void iWantToEnter(ObjetGraphique graphicalObject) throws InterruptedException
 	{
-		try
+		if (graphicalObject instanceof Cercle)
 		{
-			if (graphicalObject instanceof Cercle)
+			if(graphicalObject != circle)
 			{
-				if(graphicalObject != circle)
-				{
-					semaphoreCircle.acquire();
-					circle = (Cercle) graphicalObject;
-				}
-			}
-			else if (graphicalObject instanceof Rectangle)
-			{
-				if(graphicalObject != rectangle)
-				{
-					semaphoreRectangle.acquire();
-					rectangle = (Rectangle) graphicalObject;
-				}
-			}
-			else if (graphicalObject instanceof ImageGraphique)
-			{
-				if(graphicalObject != image)
-				{
-					semaphoreImage.acquire();
-					image = (ImageGraphique) graphicalObject;
-				}
+				semaphoreCircle.acquire();
+				circle = (Cercle) graphicalObject;
 			}
 		}
-		catch (InterruptedException e)
+		else if (graphicalObject instanceof Rectangle)
 		{
-			e.printStackTrace();
+			if(graphicalObject != rectangle)
+			{
+				semaphoreRectangle.acquire();
+				rectangle = (Rectangle) graphicalObject;
+			}
+		}
+		else if (graphicalObject instanceof ImageGraphique)
+		{
+			if(graphicalObject != image)
+			{
+				semaphoreImage.acquire();
+				image = (ImageGraphique) graphicalObject;
+			}
 		}
 	}
 
@@ -83,5 +73,14 @@ public class ProtectedZoneSemaphore extends ProtectedZone
 	{
 		semaphoreImage.release();
 		image = null;
+	}
+	
+	@Override
+	public void init()
+	{
+		super.init();
+		semaphoreCircle = new Semaphore(kNumberOfObjectsInCriticalSection);
+		semaphoreImage = new Semaphore(kNumberOfObjectsInCriticalSection);
+		semaphoreRectangle = new Semaphore(kNumberOfObjectsInCriticalSection);
 	}
 }
