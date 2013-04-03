@@ -3,7 +3,6 @@ package ch.hearc.progconc.labojava1;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
@@ -33,7 +32,7 @@ class MyCanvas extends Canvas implements Runnable
 	
 	// Zones protégées
 	private final ProtectedZone[] pz = {
-			new ProtectedZoneReetrantLock(new Point(500, 100)),
+			//new ProtectedZoneReetrantLock(new Point(500, 100)),
 			new ProtectedZoneSemaphore(new Point(50, 200))
 			};
 
@@ -103,8 +102,15 @@ class MyCanvas extends Canvas implements Runnable
 
 	public void clear()
 	{
-
+		for (ObjetGraphique og : listeObjetsDessinables)
+		{
+			og.interruptThread();
+		}
 		listeObjetsDessinables.removeAllElements();
+		for (ProtectedZone p : pz)
+		{
+			p.init();
+		}
 	}
 
 	/**
@@ -126,7 +132,6 @@ class MyCanvas extends Canvas implements Runnable
 
 			// On dessine un cercle dans le double buffer
 			objetDessinable.dessineToi(offScrGC);
-
 		}
 		
 		for (ProtectedZone p : pz)

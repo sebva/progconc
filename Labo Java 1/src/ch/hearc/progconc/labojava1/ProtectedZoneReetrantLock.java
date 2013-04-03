@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ProtectedZoneReetrantLock extends ProtectedZone
 {
-	private ReentrantLock lockCercle;
+	private ReentrantLock lockCircle;
 	private ReentrantLock lockRectangle;
 	private ReentrantLock lockImage;
 	
@@ -22,19 +22,16 @@ public class ProtectedZoneReetrantLock extends ProtectedZone
 	public ProtectedZoneReetrantLock(Point origin)
 	{
 		super(origin, kColor, kName);
-		lockCercle = new ReentrantLock();
-		lockRectangle = new ReentrantLock();
-		lockImage = new ReentrantLock();
 	}
 
 	@Override
-	public void iWantToEnter(ObjetGraphique graphicalObject)
+	public void iWantToEnter(ObjetGraphique graphicalObject) throws InterruptedException
 	{	
 		if (graphicalObject instanceof Cercle)
 		{
 			if(graphicalObject != circle)
 			{
-				lockCercle.lock();
+				lockCircle.lockInterruptibly();
 				circle = (Cercle) graphicalObject;
 			}
 		}
@@ -42,7 +39,7 @@ public class ProtectedZoneReetrantLock extends ProtectedZone
 		{
 			if(graphicalObject != rectangle)
 			{
-				lockRectangle.lock();
+				lockRectangle.lockInterruptibly();
 				rectangle = (Rectangle) graphicalObject;
 			}
 		}
@@ -50,7 +47,7 @@ public class ProtectedZoneReetrantLock extends ProtectedZone
 		{
 			if(graphicalObject != image)
 			{
-				lockImage.lock();
+				lockImage.lockInterruptibly();
 				image = (ImageGraphique) graphicalObject;
 			}
 		}
@@ -59,7 +56,7 @@ public class ProtectedZoneReetrantLock extends ProtectedZone
 	@Override
 	public void releaseCircle()
 	{
-		lockCercle.unlock();
+		lockCircle.unlock();
 		circle = null;
 	}
 
@@ -75,5 +72,14 @@ public class ProtectedZoneReetrantLock extends ProtectedZone
 	{
 		lockImage.unlock();
 		image = null;
+	}
+	
+	@Override
+	public void init()
+	{
+		super.init();
+		lockCircle = new ReentrantLock();
+		lockRectangle = new ReentrantLock();
+		lockImage = new ReentrantLock();
 	}
 }
