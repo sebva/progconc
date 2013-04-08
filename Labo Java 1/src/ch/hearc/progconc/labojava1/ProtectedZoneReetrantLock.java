@@ -56,22 +56,22 @@ public class ProtectedZoneReetrantLock extends ProtectedZone
 	@Override
 	public void releaseCircle()
 	{
-		lockCircle.unlock();
 		circle = null;
+		lockCircle.unlock();
 	}
 
 	@Override
 	public void releaseRectangle()
 	{
-		lockRectangle.unlock();
 		rectangle = null;
+		lockRectangle.unlock();
 	}
 
 	@Override
 	public void releaseImage()
 	{
-		lockImage.unlock();
 		image = null;
+		lockImage.unlock();
 	}
 	
 	@Override

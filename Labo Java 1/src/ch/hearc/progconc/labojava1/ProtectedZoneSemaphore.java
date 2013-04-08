@@ -57,22 +57,22 @@ public class ProtectedZoneSemaphore extends ProtectedZone
 	@Override
 	public void releaseCircle()
 	{
-		semaphoreCircle.release();
 		circle = null;
+		semaphoreCircle.release();
 	}
 
 	@Override
 	public void releaseRectangle()
 	{
-		semaphoreRectangle.release();
 		rectangle = null;
+		semaphoreRectangle.release();
 	}
 
 	@Override
 	public void releaseImage()
 	{
-		semaphoreImage.release();
 		image = null;
+		semaphoreImage.release();
 	}
 	
 	@Override

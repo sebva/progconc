@@ -139,7 +139,7 @@ public abstract class ObjetGraphique implements Runnable
 				move(x, y);
 	
 				// On "dort" tempsEntreDeplacement millisecondes
-				Thread.sleep(10);
+				Thread.sleep(16);
 			}
 		}
 		catch (InterruptedException e)
