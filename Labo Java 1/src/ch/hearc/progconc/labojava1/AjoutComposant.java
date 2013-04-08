@@ -53,27 +53,30 @@ public class AjoutComposant extends Frame implements ActionListener {
 		return (int) (Math.rint(Math.random() * c.getHeight()));
 	}
 
+	private void checkIsInZone(ObjetGraphique og) {
+		boolean isCollision;
+		do {
+			isCollision = false;
+			og.setX(generateX());
+			og.setY(generateY());
+
+			java.awt.Rectangle rect = og.getRect();
+
+			for (ProtectedZone p : pz) {
+				isCollision = p.isInZone(rect);
+				if (isCollision)
+					break;
+			}
+		} while (isCollision);
+	}
+
 	/** Appelé lors d'un click sur un des boutons de contrôle */
 	public void actionPerformed(ActionEvent evt) {
 		String arg = evt.getActionCommand();
 		if (arg.equals("Ajouter cercle")) {
 			Cercle cercle = new Cercle(0, 0, 30, c.getProtectedZones());
 
-			boolean isCollision = false;
-
-			do {
-				isCollision = false;
-				cercle.setX(generateX());
-				cercle.setY(generateY());
-
-				java.awt.Rectangle rect = cercle.getRect();
-
-				for (ProtectedZone p : pz) {
-					isCollision = p.isInZone(rect);
-					if (isCollision)
-						break;
-				}
-			} while (isCollision);
+			checkIsInZone(cercle);
 
 			c.ajouteObjetDessinable(cercle);
 			c.repaint();
@@ -82,21 +85,7 @@ public class AjoutComposant extends Frame implements ActionListener {
 		} else if (arg.equals("Ajouter image")) {
 			ImageGraphique image = new ImageGraphique(0, 0, "duke.gif", c);
 
-			boolean isCollision = false;
-
-			do {
-				isCollision = false;
-				image.setX(generateX());
-				image.setY(generateY());
-
-				java.awt.Rectangle rect = image.getRect();
-
-				for (ProtectedZone p : pz) {
-					isCollision = p.isInZone(rect);
-					if (isCollision)
-						break;
-				}
-			} while (isCollision);
+			checkIsInZone(image);
 
 			c.ajouteObjetDessinable(image);
 			message.setText("Nb elements : "
@@ -107,21 +96,7 @@ public class AjoutComposant extends Frame implements ActionListener {
 			Rectangle rectangle = new Rectangle(0, 0, 30, 20,
 					c.getProtectedZones());
 
-			boolean isCollision = false;
-
-			do {
-				isCollision = false;
-				rectangle.setX(generateX());
-				rectangle.setY(generateY());
-
-				java.awt.Rectangle rect = rectangle.getRect();
-
-				for (ProtectedZone p : pz) {
-					isCollision = p.isInZone(rect);
-					if (isCollision)
-						break;
-				}
-			} while (isCollision);
+			checkIsInZone(rectangle);
 
 			c.ajouteObjetDessinable(rectangle);
 

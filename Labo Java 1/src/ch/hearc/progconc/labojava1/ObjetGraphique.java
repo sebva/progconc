@@ -144,7 +144,7 @@ public abstract class ObjetGraphique implements Runnable
 		}
 		catch (InterruptedException e)
 		{
-			System.out.println(Thread.currentThread().getName() + " interrompu");
+			//System.out.println(Thread.currentThread().getName() + " interrompu");
 		}
 
 	}
