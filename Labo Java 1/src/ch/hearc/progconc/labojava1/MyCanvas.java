@@ -29,7 +29,7 @@ class MyCanvas extends Canvas implements Runnable
 
 	// Changement de couleurs
 	private Random alea;
-	
+
 	// Zones protégées
 	private final ProtectedZone[] pz;
 
@@ -57,7 +57,7 @@ class MyCanvas extends Canvas implements Runnable
 				offScrGC = offScrImage.getGraphics();
 				offScrGC.setColor(Color.red);
 
-				//System.out.println("Canvas Drawing1 retaillée : width = " + largeur + "height = " + hauteur);
+				// System.out.println("Canvas Drawing1 retaillée : width = " + largeur + "height = " + hauteur);
 			}
 		}; // Fin de la classe anonyme
 
@@ -76,7 +76,7 @@ class MyCanvas extends Canvas implements Runnable
 	{
 		listeObjetsDessinables.addElement(objet);
 	}
-	
+
 	public ProtectedZone[] getProtectedZones()
 	{
 		return pz;
@@ -130,7 +130,7 @@ class MyCanvas extends Canvas implements Runnable
 			// On dessine un cercle dans le double buffer
 			objetDessinable.dessineToi(offScrGC);
 		}
-		
+
 		for (ProtectedZone p : pz)
 		{
 			p.draw(offScrGC);
