@@ -64,6 +64,11 @@ public abstract class ObjetGraphique implements Runnable
 		this.y = y;
 	}
 
+	public Rectangle getRect()
+	{
+		return new java.awt.Rectangle(x - (largeur / 2), y- (hauteur / 2), largeur,hauteur);
+	}
+	
 	public void setHauteur(int hauteur)
 	{
 		this.hauteur = hauteur;
@@ -76,10 +81,9 @@ public abstract class ObjetGraphique implements Runnable
 
 	public void move(int x, int y) throws InterruptedException
 	{
-		Rectangle rect = new Rectangle(x - (largeur / 2), y - (hauteur / 2), largeur, hauteur);
 		for (ProtectedZone p : pz)
 		{
-			if(p.isInZone(rect))
+			if(p.isInZone(getRect()))
 				p.iWantToEnter(this);
 			else
 				p.exit(this);

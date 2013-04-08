@@ -31,14 +31,11 @@ class MyCanvas extends Canvas implements Runnable
 	private Random alea;
 	
 	// Zones protégées
-	private final ProtectedZone[] pz = {
-			new ProtectedZoneReetrantLock(new Point(500, 100)),
-			new ProtectedZoneSemaphore(new Point(50, 200))
-			};
+	private final ProtectedZone[] pz;
 
-	public MyCanvas()
+	public MyCanvas(ProtectedZone[] pz)
 	{
-
+		this.pz = pz;
 		// Classe anonyme interne pour gérer l'événement resize()
 		ComponentListener resizeCallback = new ComponentAdapter()
 		{
@@ -154,7 +151,7 @@ class MyCanvas extends Canvas implements Runnable
 			// On "dort" tempsEntreFrame millisecondes
 			try
 			{
-				Thread.sleep(100);
+				Thread.sleep(10);
 			}
 			catch (InterruptedException e)
 			{
