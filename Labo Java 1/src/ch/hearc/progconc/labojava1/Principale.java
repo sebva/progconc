@@ -14,7 +14,8 @@ package ch.hearc.progconc.labojava1;
  * <br /><br />Nous avons ensuite 2 classes enfants : ProtectedZoneReetrantLock, représentant la zone utilisant le ReetrantLock, puis ProtectedZoneSemaphore, représentant la zone utilisant le Semaphore.
  * <br />
  * Ces 2 classes implémentent les méthodes abstraitent, en utilisant les méthodes associés au bon outil de programmation concurrente.
- * <br />A l'ajout d'un objet, ReetrantLock utilisera lockInterruptibly(), Semaphore un acquire(), et l'attribut correspondant au type d'objet se voit attribué par l'objet entrant.
+ * <br />A l'ajout d'un objet, on le génère en dehors des zones, pour éviter toutes incohérences (qu'il y ait 2 objets du même type dans la même zone, même si l'un d'entre eux ne bougera pas),
+ * <br /> ReetrantLock utilisera lockInterruptibly(), Semaphore un acquire(), et l'attribut correspondant au type d'objet se voit attribué par l'objet entrant.
  * <br />A la sortie d'un objet, celui-ci est mis à null puis on utilise, dans ReetrantLock unlock() et dans Semaphore release().
  * <br /><br />
  * Lorsque l'on clique sur le bouton "effacer", il se passe les choses suivantes :
