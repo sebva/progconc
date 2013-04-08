@@ -12,6 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ProtectedZoneReetrantLock extends ProtectedZone
 {
+	// Chaque forme a 1 ReentrantLock
 	private ReentrantLock lockCircle;
 	private ReentrantLock lockRectangle;
 	private ReentrantLock lockImage;
@@ -26,7 +27,7 @@ public class ProtectedZoneReetrantLock extends ProtectedZone
 
 	@Override
 	public void iWantToEnter(ObjetGraphique graphicalObject) throws InterruptedException
-	{	
+	{
 		if (graphicalObject instanceof Cercle)
 		{
 			if(graphicalObject != circle)
@@ -56,6 +57,7 @@ public class ProtectedZoneReetrantLock extends ProtectedZone
 	@Override
 	public void releaseCircle()
 	{
+		// L'ordre de ces instructions est très important : des problèmes de concurrence peuvent apparaître sinon.
 		circle = null;
 		lockCircle.unlock();
 	}

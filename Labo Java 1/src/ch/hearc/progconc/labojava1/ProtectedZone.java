@@ -6,17 +6,20 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 /**
+ * Classe abstraite représentant une zone protégée
  * 
  * @author Sébastien Vaucher
  * @author Diego Antognini
- *
  */
 public abstract class ProtectedZone
 {
+	/** Origine du rectangle */
 	private Point origin;
+	/** Dimension des zones protégées */
 	private final static Dimension kDimension = new Dimension(300, 200);
 	private final java.awt.Rectangle kZone;
 	private Color color;
+	// Objets graphiques contenus dans la zone
 	protected Cercle circle = null;
 	protected Rectangle rectangle = null;
 	protected ImageGraphique image = null;

@@ -96,13 +96,16 @@ class MyCanvas extends Canvas implements Runnable
 		offScrGC.setColor(new Color(Math.abs(alea.nextInt()) % 256, Math.abs(alea.nextInt()) % 256, Math.abs(alea.nextInt()) % 256));
 	}
 
+	/** Supprime tous les objets graphiques du canevas et réinitialise les zones protégées */
 	public void clear()
 	{
+		// Interruption des threads des objets graphiques
 		for (ObjetGraphique og : listeObjetsDessinables)
 		{
 			og.interruptThread();
 		}
 		listeObjetsDessinables.removeAllElements();
+		// Réinitialisation des zones protégées
 		for (ProtectedZone p : pz)
 		{
 			p.init();
@@ -130,6 +133,7 @@ class MyCanvas extends Canvas implements Runnable
 			objetDessinable.dessineToi(offScrGC);
 		}
 
+		// Dessin des rectangles des zones protégées
 		for (ProtectedZone p : pz)
 		{
 			p.draw(offScrGC);

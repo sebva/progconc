@@ -12,6 +12,7 @@ import java.util.concurrent.Semaphore;
  */
 public class ProtectedZoneSemaphore extends ProtectedZone
 {
+	// Chaque forme a son Semaphore
 	private Semaphore semaphoreRectangle;
 	private Semaphore semaphoreCircle;
 	private Semaphore semaphoreImage;
