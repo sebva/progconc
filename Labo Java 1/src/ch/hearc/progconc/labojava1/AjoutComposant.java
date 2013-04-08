@@ -9,16 +9,16 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 @SuppressWarnings("serial")
-public class AjoutComposant extends Frame implements ActionListener {
+public class AjoutComposant extends Frame implements ActionListener
+{
 	MyCanvas c;
 	Label message = new Label("Zone de messages");
 
 	static int nombreObject;
-	private final ProtectedZone[] pz = {
-			new ProtectedZoneReetrantLock(new Point(500, 100)),
-			new ProtectedZoneSemaphore(new Point(50, 200)) };
+	private final ProtectedZone[] pz = { new ProtectedZoneReetrantLock(new Point(500, 100)), new ProtectedZoneSemaphore(new Point(50, 200)) };
 
-	public AjoutComposant(String titre) {
+	public AjoutComposant(String titre)
+	{
 		super(titre);
 
 		// Fenêtre d'animation au centre
@@ -36,8 +36,10 @@ public class AjoutComposant extends Frame implements ActionListener {
 		// Zone de message en haut
 		add("North", message);
 
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
+		addWindowListener(new WindowAdapter()
+		{
+			public void windowClosing(WindowEvent e)
+			{
 				System.exit(0);
 			}
 		});
@@ -45,24 +47,29 @@ public class AjoutComposant extends Frame implements ActionListener {
 		message.setText("Nb elements : " + ObjetGraphique.getNbObjetsCrees());
 	}
 
-	private int generateX() {
+	private int generateX()
+	{
 		return (int) (Math.rint(Math.random() * c.getWidth()));
 	}
 
-	private int generateY() {
+	private int generateY()
+	{
 		return (int) (Math.rint(Math.random() * c.getHeight()));
 	}
 
-	private void checkIsInZone(ObjetGraphique og) {
+	private void checkIsInZone(ObjetGraphique og)
+	{
 		boolean isCollision;
-		do {
+		do
+		{
 			isCollision = false;
 			og.setX(generateX());
 			og.setY(generateY());
 
 			java.awt.Rectangle rect = og.getRect();
 
-			for (ProtectedZone p : pz) {
+			for (ProtectedZone p : pz)
+			{
 				isCollision = p.isInZone(rect);
 				if (isCollision)
 					break;
@@ -71,49 +78,56 @@ public class AjoutComposant extends Frame implements ActionListener {
 	}
 
 	/** Appelé lors d'un click sur un des boutons de contrôle */
-	public void actionPerformed(ActionEvent evt) {
+	public void actionPerformed(ActionEvent evt)
+	{
 		String arg = evt.getActionCommand();
-		if (arg.equals("Ajouter cercle")) {
+		if (arg.equals("Ajouter cercle"))
+		{
 			Cercle cercle = new Cercle(0, 0, 30, c.getProtectedZones());
 
 			checkIsInZone(cercle);
 
 			c.ajouteObjetDessinable(cercle);
 			c.repaint();
-			message.setText((String) ("Nb elements : " + ObjetGraphique
-					.getNbObjetsCrees()));
-		} else if (arg.equals("Ajouter image")) {
+			message.setText((String) ("Nb elements : " + ObjetGraphique.getNbObjetsCrees()));
+		}
+		else if (arg.equals("Ajouter image"))
+		{
 			ImageGraphique image = new ImageGraphique(0, 0, "duke.gif", c);
 
 			checkIsInZone(image);
 
 			c.ajouteObjetDessinable(image);
-			message.setText("Nb elements : "
-					+ ObjetGraphique.getNbObjetsCrees());
+			message.setText("Nb elements : " + ObjetGraphique.getNbObjetsCrees());
 			c.repaint();
 
-		} else if (arg.equals("Ajouter rectangle")) {
-			Rectangle rectangle = new Rectangle(0, 0, 30, 20,
-					c.getProtectedZones());
+		}
+		else if (arg.equals("Ajouter rectangle"))
+		{
+			Rectangle rectangle = new Rectangle(0, 0, 30, 20, c.getProtectedZones());
 
 			checkIsInZone(rectangle);
 
 			c.ajouteObjetDessinable(rectangle);
 
-			message.setText("Nb elements : "
-					+ ObjetGraphique.getNbObjetsCrees());
+			message.setText("Nb elements : " + ObjetGraphique.getNbObjetsCrees());
 			c.repaint();
-		} else if (arg.equals("Changer couleur")) {
+		}
+		else if (arg.equals("Changer couleur"))
+		{
 			c.changeCouleur();
 			c.repaint();
-		} else if (arg.equals("Effacer")) {
+		}
+		else if (arg.equals("Effacer"))
+		{
 			c.clear();
 			ObjetGraphique.nbObjetsCrees = 0;
-			message.setText("Nb elements : "
-					+ ObjetGraphique.getNbObjetsCrees());
+			message.setText("Nb elements : " + ObjetGraphique.getNbObjetsCrees());
 			c.repaint();
 
-		} else if (arg.equals("Quitter")) {
+		}
+		else if (arg.equals("Quitter"))
+		{
 			System.exit(0);
 		}
 	}
