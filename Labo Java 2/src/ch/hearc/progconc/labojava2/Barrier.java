@@ -13,7 +13,7 @@ public class Barrier
 {
 	private static final int kNumberOfObjectsNecessaryInOrderToPassTheBarrier = 3;
 	
-	private Map<String, CyclicBarrier> cyclicBarriers;
+	private Map<String, CyclicBarrier> cyclicBarriers;//Contient la CyclicBarrier du type d'objet
 	private String nom;
 	private Point p1 = new Point(0, 300);
 	private Point p2 = new Point(300, 400);
@@ -53,6 +53,7 @@ public class Barrier
 
 	private void initCyclicBarrier(String key)
 	{
+		//Créer le cyclicBarriers associé au type d'objet s'il n'existe pas encore
 		if(!cyclicBarriers.containsKey(key))
 			cyclicBarriers.put(key, new CyclicBarrier(kNumberOfObjectsNecessaryInOrderToPassTheBarrier));
 	}
