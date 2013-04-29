@@ -11,14 +11,17 @@ public abstract class ObjetGraphique implements Runnable
 	static int zone_l, zone_h; // taille de la zone ou l'objet a le droit de se promener
 	static int nbObjetsCrees = 0;
 	private Thread thread;
+	private Barrier b;
+	private boolean isCurrentlyPassingTheBarrier = false;
 
 	// Constructeurs
-	public ObjetGraphique(int x, int y, int largeur, int hauteur)
+	public ObjetGraphique(int x, int y, int largeur, int hauteur, Barrier b)
 	{
 		this.x = x;
 		this.y = y;
 		this.largeur = largeur;
 		this.hauteur = hauteur;
+		this.b = b;
 		nbObjetsCrees++;
 
 		thread = new Thread(this);
@@ -79,6 +82,17 @@ public abstract class ObjetGraphique implements Runnable
 
 	public void move(int x, int y) throws InterruptedException
 	{
+		if(b.isInZone(getRect()))
+		{
+			if(!isCurrentlyPassingTheBarrier)
+			{
+				isCurrentlyPassingTheBarrier = true;
+				b.iWantToPass(this);
+			}
+		}
+		else
+			isCurrentlyPassingTheBarrier = false;
+		
 		this.x = x;
 		this.y = y;
 	}

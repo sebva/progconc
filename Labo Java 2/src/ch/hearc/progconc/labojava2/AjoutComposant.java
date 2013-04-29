@@ -12,6 +12,7 @@ public class AjoutComposant extends Frame implements ActionListener
 {
 	MyCanvas c;
 	Label message = new Label("Zone de messages");
+	private final Barrier barrier;
 
 	static int nombreObject;
 
@@ -19,8 +20,10 @@ public class AjoutComposant extends Frame implements ActionListener
 	{
 		super(titre);
 
+		barrier = new Barrier("Barrier");
+		
 		// Fenêtre d'animation au centre
-		c = new MyCanvas();
+		c = new MyCanvas(barrier);
 		add("Center", c);
 
 		// Fenêtre avec les boutons de contrôle à gauche
@@ -63,6 +66,8 @@ public class AjoutComposant extends Frame implements ActionListener
 			isCollision = false;
 			og.setX(generateX());
 			og.setY(generateY());
+			
+			isCollision = barrier.isInZone(og.getRect());
 		} while (isCollision);
 	}
 
@@ -72,7 +77,7 @@ public class AjoutComposant extends Frame implements ActionListener
 		String arg = evt.getActionCommand();
 		if (arg.equals("Ajouter cercle"))
 		{
-			Cercle cercle = new Cercle(0, 0, 30);
+			Cercle cercle = new Cercle(0, 0, 30, barrier);
 
 			checkIsInZone(cercle);
 
@@ -82,7 +87,7 @@ public class AjoutComposant extends Frame implements ActionListener
 		}
 		else if (arg.equals("Ajouter image"))
 		{
-			ImageGraphique image = new ImageGraphique(0, 0, "duke.gif", c);
+			ImageGraphique image = new ImageGraphique(0, 0, "duke.gif", c, barrier);
 
 			checkIsInZone(image);
 
@@ -93,7 +98,7 @@ public class AjoutComposant extends Frame implements ActionListener
 		}
 		else if (arg.equals("Ajouter rectangle"))
 		{
-			Rectangle rectangle = new Rectangle(0, 0, 30, 20);
+			Rectangle rectangle = new Rectangle(0, 0, 30, 20, barrier);
 
 			checkIsInZone(rectangle);
 

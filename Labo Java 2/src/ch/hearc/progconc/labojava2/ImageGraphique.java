@@ -15,10 +15,10 @@ public class ImageGraphique extends ObjetGraphique
 	private Canvas parent;
 
 	// Constructeurs
-	public ImageGraphique(int x, int y, String nom, MyCanvas parent)
+	public ImageGraphique(int x, int y, String nom, MyCanvas parent, Barrier barrier)
 	{
 		// Largeur et hauteur non connues à la création
-		super(x, y, 0, 0);
+		super(x, y, 0, 0, barrier);
 		try
 		{
 			if(image == null)

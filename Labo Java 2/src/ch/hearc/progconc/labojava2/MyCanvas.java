@@ -2,6 +2,7 @@ package ch.hearc.progconc.labojava2;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
@@ -28,9 +29,13 @@ class MyCanvas extends Canvas implements Runnable
 
 	// Changement de couleurs
 	private Random alea;
+	
+	private Barrier barrier;
 
-	public MyCanvas()
+	public MyCanvas(final Barrier barrier)
 	{
+		this.barrier = barrier;
+		
 		// Classe anonyme interne pour gérer l'événement resize()
 		ComponentListener resizeCallback = new ComponentAdapter()
 		{
@@ -41,6 +46,7 @@ class MyCanvas extends Canvas implements Runnable
 				hauteur = getSize().height;
 
 				ObjetGraphique.setZoneEvolution(largeur, hauteur);
+				barrier.resize(largeur, hauteur);
 
 				// Le double buffer = une image mémoire de la taille de la
 				// zone d'évolution
@@ -96,6 +102,7 @@ class MyCanvas extends Canvas implements Runnable
 			og.interruptThread();
 		}
 		listeObjetsDessinables.removeAllElements();
+		barrier.resetBarriers();
 	}
 
 	/**
@@ -118,6 +125,8 @@ class MyCanvas extends Canvas implements Runnable
 			// On dessine un cercle dans le double buffer
 			objetDessinable.dessineToi(offScrGC);
 		}
+		
+		barrier.draw(offScrGC);
 
 		// On recopie le double buffer dans le canvas
 		gc.drawImage(offScrImage, 0, 0, this);
