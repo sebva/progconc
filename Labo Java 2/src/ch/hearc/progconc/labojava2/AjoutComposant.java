@@ -82,8 +82,9 @@ public class AjoutComposant extends Frame implements ActionListener
 			checkIsInZone(cercle);
 
 			c.ajouteObjetDessinable(cercle);
-			c.repaint();
+			
 			message.setText((String) ("Nb elements : " + ObjetGraphique.getNbObjetsCrees()));
+			c.repaint();
 		}
 		else if (arg.equals("Ajouter image"))
 		{
